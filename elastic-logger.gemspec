@@ -3,14 +3,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elastic_logger/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "elastic_logger"
+  spec.name          = "elastic-logger"
   spec.version       = ElasticLogger::VERSION
   spec.authors       = ["Radosław Woźnik", "Infakt DevTeam"]
   spec.email         = ["p@infakt.pl"]
 
   spec.summary       = %q{Elastic Logger, logs to elasticsearch or files}
   spec.description   = %q{Elastic Logger, logs to elasticsearch or files}
-  spec.homepage      = "https://github.com/infakt/elastic_logger"
+  spec.homepage      = "https://github.com/infakt/elastic-logger"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or

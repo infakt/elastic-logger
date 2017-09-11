@@ -1,3 +1,5 @@
+require 'elasticsearch'
+
 module ElasticLogger
   class ElkWriter
     def initialize(name:, config:)

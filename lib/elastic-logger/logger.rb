@@ -1,3 +1,5 @@
+require 'elastic-logger/types'
+
 module ElasticLogger
   class Logger
     def initialize(name)
@@ -24,7 +26,7 @@ module ElasticLogger
     end
 
     def logs
-      @@logs ||= YAML.load_file(config.types_file)
+      @@logs ||= Elasticsearch::Types.new.all
     end
 
     def default

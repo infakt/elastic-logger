@@ -18,6 +18,11 @@ Or install it yourself as:
 
 ## Usage Examples
 
+There is a generator for Rails which will create base intialize and config files.
+```bash
+bundle exec rails generate elastic_logger
+```
+
 ```ruby
 require 'elastic-logger'
 
@@ -66,6 +71,15 @@ It is use by us mostly on devels, when we don't want to use elk for logs. Intern
 You can create your own writer. It needs two mtethods:
 * `initialize` with `name` and `config` named params
 * `log` with one params with is hash to log.
+
+### Capistrano
+
+```ruby
+# Capfile
+require 'elastic-logger/capistrano'
+```
+
+Index in elasticsearch will be updated after deploy, with all used elk logs.
 
 ## Contributing
 

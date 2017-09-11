@@ -2,7 +2,7 @@ after "deploy", "elastic_logger:rotate"
 
 namespace :load do
   task :defaults do
-    set :elastic_logger_server_role, -> { :app }
+    set :elastic_logger_server_role, -> { :elasticlogger }
   end
 end
 

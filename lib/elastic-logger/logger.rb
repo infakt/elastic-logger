@@ -26,7 +26,7 @@ module ElasticLogger
     end
 
     def logs
-      @@logs ||= Elasticsearch::Types.new.all
+      @@logs ||= ElasticLogger::Types.new.all
     end
 
     def default

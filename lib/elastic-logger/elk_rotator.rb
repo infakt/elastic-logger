@@ -13,7 +13,7 @@ module ElasticLogger
     private
 
     def logs
-      @logs ||= ElasticLogger::Types.new.by_writter('InfaktLogger::ElkWriter')
+      @logs ||= ElasticLogger::Types.new.by_writter('ElasticLogger::ElkWriter')
     end
 
     def client

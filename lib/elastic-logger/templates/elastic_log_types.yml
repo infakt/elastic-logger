@@ -1,10 +1,12 @@
 first_sample_log:
-  writer: 'InfaktLogger::ElkWriter'
-  rotate_type: 'rotate'
-  rotate: 1
-  backup: false
+  writer: 'ElasticLogger::ElkWriter'
+  delete:
+    type: 'standard' # never if you want to keep that log
+    unit: 'days' # One of seconds, minutes, hours, days, weeks, months, or years.
+    unit_count: 2 # The number of unit (s). unit_count * unit will be calculated out to the relative number of seconds.
+  backup:
+    type: 'standard' # infinite if you want to keep that log, never for no backups
+    unit: 'days' # One of seconds, minutes, hours, days, weeks, months, or years.
+    unit_count: 2 # The number of unit (s). unit_count * unit will be calculated out to the relative number of seconds.
 second_sample_log:
   writer: 'InfaktLogger::DiskWriter'
-  rotate_type: 'rotate'
-  rotate: 3
-  backup: false

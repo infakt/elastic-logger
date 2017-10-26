@@ -25,11 +25,11 @@ module ElasticLogger
     end
 
     def index
-      'elastic_logger_rotate'
+      'logs_rotate_info'
     end
 
     def keys
-      ["rotate_type", "rotate", "backup"]
+      ["delete", "backup"]
     end
   end
 end

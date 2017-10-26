@@ -41,14 +41,18 @@ With this file we create two logs, one which will log to elastic, and one to sta
 ```yml
 sidekiq_monitor:
   writer: 'InfaktLogger::ElastickWriter'
-  rotate_type: 'rotate'
-  rotate: 1
-  backup: false
+  rotate: 30 # how many days keep in elk
+  backup: 90 # how many days keep backup, 0 for no backup, -1 for infinite
 api_requests:
   writer: 'InfaktLogger::DiskWriter'
-  rotate_type: 'rotate'
-  rotate: 3
-  backup: false
+  delete:
+    type: 'standard' # never if you want to keep that log
+    unit: 'days' # One of seconds, minutes, hours, days, weeks, months, or years.
+    unit_count: # The number of unit (s). unit_count * unit will be calculated out to the relative number of seconds.
+  backup:
+    type: 'standard' # infinite if you want to keep that log, never for no backups
+    unit: 'days' # One of seconds, minutes, hours, days, weeks, months, or years.
+    unit_count: # The number of unit (s). unit_count * unit will be calculated out to the relative number of seconds.
 ```
 ### Usage
 

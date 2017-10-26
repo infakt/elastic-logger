@@ -31,6 +31,7 @@ ElasticLogger.configure do |config|
   config.host = '192.168.60.10:9200'
   types_file = 'config/elastic_log_config.yml'
   path = 'log'
+  prefix = ''
 end
 ```
 
@@ -50,6 +51,8 @@ api_requests:
   backup: false
 ```
 ### Usage
+
+`sidekiq_monitor` is a name of log it will be used with `prefix` to build file name or index name in elastic.
 
 ```ruby
 logger = ElasticLogger::Logger.new('sidekiq_monitor')

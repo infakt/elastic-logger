@@ -18,7 +18,11 @@ module ElasticLogger
 
     def writer
       writer = logs.fetch(name, default).fetch("writer")
-      Object.const_get(writer).new(name: name, config: config)
+      Object.const_get(writer).new(name: log_name, config: config)
+    end
+
+    def log_name
+      [config.prefix, name].map(&:to_s).reject(&:empty?).join("_")
     end
 
     def config

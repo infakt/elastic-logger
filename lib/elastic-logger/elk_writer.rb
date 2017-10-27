@@ -8,18 +8,29 @@ module ElasticLogger
     end
 
     def log(hash)
-      client.index(index: index, type: name, body: hash)
+      client.index(index: index, type: name, body: build_log(hash))
     end
 
     private
     attr_reader :config, :name
+
+    def build_log(hash)
+      {
+        "@fields" => hash,
+        "@timestamp" => timestamp.iso8601(3)
+      }
+    end
 
     def client
       @client ||= Elasticsearch::Client.new(host: config.host)
     end
 
     def index
-      "#{name}-#{Date.today.strftime('%Y.%m.%d')}"
+      "#{name}-#{timestamp.strftime('%Y.%m.%d')}"
+    end
+
+    def timestamp
+      Time.now.utc
     end
   end
 end

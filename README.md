@@ -40,7 +40,7 @@ With this file we create two logs, one which will log to elastic, and one to sta
 
 ```yml
 sidekiq_monitor:
-  writer: 'InfaktLogger::ElastickWriter'
+  writer: 'InfaktLogger::ElkWriter'
   delete:
     type: 'standard' # never if you want to keep that log
     unit: 'days' # One of seconds, minutes, hours, days, weeks, months, or years.

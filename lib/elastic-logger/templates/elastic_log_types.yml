@@ -1,5 +1,6 @@
 first_sample_log:
   writer: 'ElasticLogger::ElkWriter'
+  level: 'debug' # log level
   delete:
     type: 'standard' # never if you want to keep that log
     unit: 'days' # One of seconds, minutes, hours, days, weeks, months, or years.
@@ -10,3 +11,4 @@ first_sample_log:
     unit_count: 2 # The number of unit (s). unit_count * unit will be calculated out to the relative number of seconds.
 second_sample_log:
   writer: 'InfaktLogger::DiskWriter'
+  level: 'warn'

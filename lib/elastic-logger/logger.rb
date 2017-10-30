@@ -1,9 +1,10 @@
+require 'elastic-logger/message_parser'
 require 'elastic-logger/types'
 
 module ElasticLogger
   class Logger
 
-    def initialize(name, log_level = 'debug')
+    def initialize(name, log_level = nil)
       @name = name.to_s
       @log_level = log_level
     end
@@ -28,15 +29,14 @@ module ElasticLogger
     end
 
     private
-    attr_reader :name, :log_level
+    attr_reader :name
 
     def skip_logging?(severity)
       log_levels[severity] < log_levels[log_level]
     end
 
     def writer
-      writer = logs.fetch(name, default).fetch("writer")
-      Object.const_get(writer).new(name: log_name, config: config)
+      Object.const_get(log_writer).new(name: log_name, config: config)
     end
 
     def log_name
@@ -44,33 +44,33 @@ module ElasticLogger
     end
 
     def config
-      @config ||= ElasticLogger.configuration
+      @config ||= ::ElasticLogger.configuration
     end
 
-    def logs
-      @@logs ||= ElasticLogger::Types.new.all
+    def format_message(msg)
+      ::ElasticLogger::MessageParser.new.(msg)
     end
 
-    def default
-      { "writer" => "ElasticLogger::NullLogger" }
+    def log_writer
+      log_type.fetch('writer')
+    end
+
+    def log_level
+      @log_level ||= log_type.fetch('level', 'info')
+    end
+
+    def log_type
+      @log_type ||= ::ElasticLogger::Types.new.find(name)
     end
 
     def log_levels
       @log_levels ||= Hash.new do |hash, key|
-        hash[key] = ::Logger.const_get(format_severity(severity))
+        hash[key] = ::Logger.const_get(format_severity(key))
       end
     end
 
     def format_severity(severity)
       severity.to_s.upcase
-    end
-
-    def format_message(msg)
-      case msg
-      when String then { msg: msg }
-      when Array then msg.map.with_index { |v, i| [i, v] }.to_h
-      else msg
-      end
     end
   end
 end

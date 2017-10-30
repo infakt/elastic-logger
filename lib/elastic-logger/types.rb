@@ -8,6 +8,10 @@ module ElasticLogger
       logs.select { |_, values| values.fetch("writer") == writer }
     end
 
+    def find(name)
+      logs.fetch(name, default)
+    end
+
     private
 
     def logs
@@ -16,6 +20,10 @@ module ElasticLogger
 
     def config
       ElasticLogger.configuration
+    end
+
+    def default
+      { "writer" => "ElasticLogger::NullLogger", "level" => "debug" }
     end
   end
 end

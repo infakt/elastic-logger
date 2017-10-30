@@ -7,17 +7,18 @@ module ElasticLogger
       @name = name
     end
 
-    def log(hash)
-      client.index(index: index, type: name, body: build_log(hash))
+    def log(severity, hash)
+      client.index(index: index, type: name, body: build_log(severity, hash))
     end
 
     private
     attr_reader :config, :name
 
-    def build_log(hash)
+    def build_log(severity, hash)
       {
         "@fields" => hash,
-        "@timestamp" => timestamp.iso8601(3)
+        "@timestamp" => timestamp.iso8601(3),
+        "@severity" => severity
       }
     end
 

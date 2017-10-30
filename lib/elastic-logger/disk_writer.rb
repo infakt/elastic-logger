@@ -5,8 +5,8 @@ module ElasticLogger
       @name = name
     end
 
-    def log(hash)
-      logger.info(hash)
+    def log(severity, hash)
+      logger.send(severity, hash)
     end
 
     private

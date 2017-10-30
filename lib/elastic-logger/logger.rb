@@ -2,16 +2,29 @@ require 'elastic-logger/types'
 
 module ElasticLogger
   class Logger
+
     def initialize(name)
       @name = name.to_s
     end
 
-    def log(hash)
-      writer.log(hash)
+    # def debug(hash)
+    # def error(hash)
+    # def fatal(hash)
+    # def info(hash)
+    # def unknown(hash)
+    # def warn(hash)
+    %w(debug error fatal info unknown warn).each do |severity|
+      define_method(severity) do |hash|
+        log(hash, severity.to_s.upcase)
+      end
     end
-    alias_method :debug, :log
-    alias_method :info, :log
-    alias_method :warn, :log
+
+    def log(hash, severity = 'UNKNOWN')
+      return true if ::Logger.const_get(severity) < config.log_level
+
+      writer.log(severity, hash)
+      true
+    end
 
     private
     attr_reader :name

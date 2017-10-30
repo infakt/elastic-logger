@@ -24,7 +24,7 @@ module ElasticLogger
     def log(msg, severity = 'unknown')
       return true if skip_logging?(severity)
 
-      writer.log(format_severity(severity), format_message(msg))
+      writer.log(severity, format_message(msg))
       true
     end
 
@@ -65,12 +65,8 @@ module ElasticLogger
 
     def log_levels
       @log_levels ||= Hash.new do |hash, key|
-        hash[key] = ::Logger.const_get(format_severity(key))
+        hash[key] = ::Logger.const_get(key.to_s.upcase)
       end
-    end
-
-    def format_severity(severity)
-      severity.to_s.upcase
     end
   end
 end

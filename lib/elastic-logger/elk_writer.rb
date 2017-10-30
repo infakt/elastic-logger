@@ -18,7 +18,7 @@ module ElasticLogger
       {
         "@fields" => hash,
         "@timestamp" => timestamp.iso8601(3),
-        "@severity" => severity
+        "@severity" => severity.to_s.upcase
       }
     end
 

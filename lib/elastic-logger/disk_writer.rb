@@ -6,11 +6,15 @@ module ElasticLogger
     end
 
     def log(severity, hash)
-      logger.send(severity, hash)
+      logger.send(severity, build_log(hash))
     end
 
     private
     attr_reader :config, :name
+
+    def build_log(hash)
+      hash.merge("@timestamp" => timestamp.iso8601(3))
+    end
 
     def logger
       @logger ||= ::Logger.new(path_with(name), 'monthly').tap { |lgger|
@@ -20,6 +24,10 @@ module ElasticLogger
 
     def path_with(name)
       Pathname.new(config.path).join("#{name}.log")
+    end
+
+    def timestamp
+      Time.now.utc
     end
   end
 end

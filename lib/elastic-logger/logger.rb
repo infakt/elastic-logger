@@ -19,10 +19,10 @@ module ElasticLogger
       end
     end
 
-    def log(hash, severity = 'UNKNOWN')
+    def log(msg, severity = 'UNKNOWN')
       return true if ::Logger.const_get(severity) < config.log_level
 
-      writer.log(severity, hash)
+      writer.log(severity, format(msg))
       true
     end
 
@@ -32,6 +32,14 @@ module ElasticLogger
     def writer
       writer = logs.fetch(name, default).fetch("writer")
       Object.const_get(writer).new(name: log_name, config: config)
+    end
+
+    def format(msg)
+      case msg
+      when String then { msg: msg }
+      when Array then msg.map.with_index { |v, i| [i, v] }.to_h
+      else msg
+      end
     end
 
     def log_name

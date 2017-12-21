@@ -28,6 +28,10 @@ module ElasticLogger
       true
     end
 
+    def level=(level)
+      @log_level = level
+    end
+
     private
     attr_reader :name
 

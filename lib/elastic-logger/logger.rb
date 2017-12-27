@@ -69,7 +69,8 @@ module ElasticLogger
 
     def log_levels
       @log_levels ||= Hash.new do |hash, key|
-        hash[key] = ::Logger.const_get(key.to_s.upcase)
+        lvl = key.is_a?(Integer) ? key : ::Logger.const_get(key.to_s.upcase)
+        hash[key] = lvl
       end
     end
   end

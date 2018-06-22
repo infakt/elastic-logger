@@ -40,7 +40,7 @@ With this file we create two logs, one which will log to elastic, and one to sta
 
 ```yml
 sidekiq_monitor:
-  writer: 'InfaktLogger::ElkWriter'
+  writer: 'ElasticLogger::ElkWriter'
   level: 'debug' # log level, one of debug, error, fatal, info, unknown, and warn
   delete:
     type: 'standard' # never if you want to keep that log
@@ -51,7 +51,7 @@ sidekiq_monitor:
     unit: 'days' # One of seconds, minutes, hours, days, weeks, months, or years.
     unit_count: 2 # The number of unit (s). unit_count * unit will be calculated out to the relative number of seconds.
 api_requests:
-  writer: 'InfaktLogger::DiskWriter'
+  writer: 'ElasticLogger::DiskWriter'
   level: 'warn'
 ```
 ### Usage
